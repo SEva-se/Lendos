@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Бесплатный AI‑аудит + готовое решение за 48 часов</title>
+  <meta name="description" content="Бесплатный AI‑аудит вашей онлайн‑школы или блога и бесплатное внедрение 1 готового решения за 48 часов. Если понравится — подключаем полный пакет внедрений и сопровождения." />
+  <!-- Fancy brand font -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b0d12; --card:#12151c; --muted:#9aa4b2; --text:#ecf0f3; --accent:#6ee7ff; --accent-2:#a7f3d0; --danger:#ff6b6b; --ok:#22c55e; --border:#1e2230; --title:#ffcc70; }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;color:var(--text);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial;
+      /* subtle AI grid + aurora background */
+      background:
+        radial-gradient(800px 500px at 90% -10%, rgba(110,231,255,.10), transparent 60%),
+        radial-gradient(700px 500px at -10% 20%, rgba(167,243,208,.08), transparent 60%),
+        linear-gradient(#0b0d12,#0b0d12);
+    }
+     
+    a{color:inherit;text-decoration:none}
+    .container{max-width:1100px;margin:0 auto;padding:0 20px;position:relative}
+    .btn{display:inline-flex;align-items:center;gap:.6rem;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#0b0d12;border:none;border-radius:12px;padding:14px 18px;font-weight:700;cursor:pointer;box-shadow:0 8px 30px rgba(110,231,255,.15)}
+    .btn.secondary{background:#1f2432;color:var(--text);border:1px solid var(--border)}
+    .tag{display:inline-block;border:1px solid var(--border);border-radius:999px;padding:4px 10px;color:var(--muted);font-size:.85rem}
+
+    /*/* Header */
+    .site-header{position:sticky;top:0;backdrop-filter:saturate(140%) blur(8px);-webkit-backdrop-filter:blur(8px) saturate(140%);background:rgba(11,13,18,.6);border-bottom:1px solid var(--border);z-index:1000}
+    .site-header .inner{padding:12px 0} 
+    .topnav{display:flex;align-items:center;gap:16px;flex-wrap:nowrap}
+    .topnav a{opacity:.8}
+    .topnav a:hover{opacity:1}
+    .topnav > a.btn{margin-left:auto;flex:0 0 auto}
+    .brand-title{font-family:'Orbitron',sans-serif;font-weight:700;font-size:1.3rem;color:var(--title);margin-right:6px;white-space:nowrap;margin-left:-12px}
+    .topnav{display:flex;align-items:center;gap:16px;flex-wrap:nowrap}
+    .topnav a{opacity:.8}
+    .topnav a:hover{opacity:1}
+    .topnav > a.btn{margin-left:auto;flex:0 0 auto}
+    .brand-title{font-family:'Orbitron',sans-serif;font-weight:700;font-size:1.3rem;color:var(--title);margin-right:6px;white-space:nowrap;margin-left:-12px}
+
+    /* Hero */
+    .hero{padding:56px 0 24px;position:relative;overflow:hidden}
+    .hero::before,.hero::after{content:"";position:absolute;inset:auto;pointer-events:none;filter:blur(40px);opacity:.65}
+    .hero::before{width:520px;height:520px;right:-120px;top:-140px;background:radial-gradient(closest-side, rgba(110,231,255,.14), transparent 70%)}
+    .hero::after{width:520px;height:520px;left:-160px;bottom:-160px;background:radial-gradient(closest-side, rgba(167,243,208,.12), transparent 70%)}
+
+    h1{font-size:44px;line-height:1.1;margin:.2rem 0 1rem}
+    h2{font-size:28px;margin:0 0 1rem}
+    h3{font-size:22px;margin:0 0 .6rem}
+    p.lead{font-size:1.1rem;color:#cfd6de;max-width:800px}
+
+    .grid{display:grid;gap:18px}
+    .grid.cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .grid.cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    @media (max-width:900px){.grid.cols-2,.grid.cols-3{grid-template-columns:1fr}}
+
+    .card{background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,0));border:1px solid var(--border);border-radius:18px;padding:18px;position:relative}
+    .card.emph{border-image:linear-gradient(90deg,var(--accent),var(--accent-2)) 1;border-width:1px}
+    /* soft corner glow for cards */
+    .card::after{content:"";position:absolute;inset:-1px;border-radius:inherit;background:radial-gradient(300px 220px at 85% -10%, rgba(110,231,255,.12), transparent 60%);pointer-events:none}
+
+    ul.clean{list-style:none;padding-left:0;margin:0}
+    ul.clean li{display:flex;gap:.6rem;align-items:flex-start;margin:.35rem 0}
+
+    /* HERO BENEFITS — fill the right card nicely without changing its size */
+    .hero-benefits{display:grid;grid-template-rows:auto 1fr}
+    .hero-benefits .clean{display:grid;align-content:space-between;row-gap:10px;height:100%;font-size:1.08rem}
+    .hero-benefits .clean li{padding:10px 12px;border-radius:12px;border:1px solid var(--border);background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,0));
+      box-shadow:0 1px 0 rgba(255,255,255,.03) inset}
+    .hero-benefits .clean li b{color:#e7f8ff}
+
+    .kpi{display:flex;gap:8px;flex-wrap:wrap;margin:.6rem 0 0}
+    .kpi .chip{border:1px dashed var(--border);border-radius:8px;padding:6px 10px;color:#cfe7ff;font-size:.92rem}
+
+    .section{padding:28px 0;position:relative}
+    /* section background accents */
+    .section::before{content:"";position:absolute;inset:auto;left:50%;transform:translateX(-50%);top:-1px;width:60%;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent)}
+
+    .muted{color:var(--muted)}
+    .divider{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:26px 0}
+    .footnote{font-size:.9rem;color:var(--muted)}
+    footer{border-top:1px solid var(--border);padding:28px 0;color:var(--muted)}
+    .pill{display:inline-flex;align-items:center;gap:.5rem;background:#121720;border:1px solid var(--border);padding:6px 10px;border-radius:999px}
+    .inline{display:inline-flex;gap:.8rem;flex-wrap:wrap}
+    .warning{color:var(--danger)}
+
+    /* ==== CASES styling ==== */
+    .cases-grid{align-items:stretch}
+    .case-card{display:grid;grid-template-rows:auto 1fr auto}
+    .case-card h3{margin:.3rem 0 .4rem}
+    .case-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px}
+    .case-meta .badge{border:1px solid var(--border);background:#0c1119}
+    .case-body{display:grid;gap:10px}
+    .ticks{margin:6px 0 0}
+    .ticks li{position:relative;padding:10px 12px 10px 28px;border-radius:12px;border:1px solid var(--border);background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,0))}
+    .ticks li::before{content:"✔";position:absolute;left:10px;top:10px;color:var(--accent-2);opacity:.9}
+    .metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:6px}
+    .metric{border:1px dashed var(--border);border-radius:12px;padding:10px 8px;text-align:center;background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,0))}
+    .metric .val{font-weight:800;font-size:20px;line-height:1.1;background:linear-gradient(90deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+    .metric .label{display:block;color:#cbd5e1;font-size:.86rem;margin-top:2px}
+    .case-foot{margin-top:8px;display:flex;justify-content:flex-start}
+
+    /* Small screens: prevent wrap, allow scroll */
+    @media (max-width:700px){
+      .topnav{overflow-x:auto;white-space:nowrap}
+
+    
+  
+      .hero{padding-top:34px}
+      .metrics{grid-template-columns:1fr 1fr}
+    }
+    /* === Portrait + client logos === */
+    .portrait{position:relative;max-width:420px;margin:0 auto;border-radius:20px;overflow:hidden;border:1px solid var(--border);
+      background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,0));box-shadow:0 10px 40px rgba(110,231,255,.08)}
+    .portrait::before{content:"";position:absolute;inset:-1px;border-radius:inherit;pointer-events:none;mix-blend:screen;opacity:.55;background:
+      radial-gradient(240px 160px at 85% 0%, rgba(110,231,255,.35), transparent 60%),
+      radial-gradient(200px 160px at 0% 100%, rgba(167,243,208,.28), transparent 60%)}
+    .portrait img{display:block;width:100%;height:auto}
+    .portrait .label{position:absolute;left:12px;bottom:12px;background:#0c1119cc;border:1px solid var(--border);padding:6px 10px;border-radius:10px;font-weight:700}
+
+    .client-logos{display:flex;gap:24px;align-items:center;flex-wrap:wrap;padding-top:12px;opacity:.9}
+    .client-logos img{height:30px;filter:grayscale(.95);opacity:.85;transition:filter .2s,opacity .2s,transform .2s}
+    .client-logos img:hover{filter:none;opacity:1;transform:translateY(-1px)}
+
+    /* === Header compact spacing === */
+    .site-header .container{padding-left:8px;padding-right:8px}
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container inner">
+      <div class="topnav">
+        <div class="brand-title">AI Sprint</div>
+        <span class="pill"><span>⏱️</span>48 часов</span>
+        <span class="pill"><span>🆓</span>Бесплатно: аудит + 1 решение</span>
+        <a href="#solutions">Решения</a>
+        <a href="#process">Как это работает</a>
+        <a href="#capabilities">Что автоматизируем</a>
+        <a href="#cases">Кейсы</a>
+        <a href="#about">Кто мы</a>
+        <a href="#book" class="btn" id="openModalBtn">Получить бесплатный аудит</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero container">
+      <div class="grid cols-2">
+        <div>
+          <div class="inline">
+            <span class="tag">Для экспертов, блогов и онлайн‑школ</span>
+            <span class="tag">Только 3 места</span>
+          </div>
+          <h1>Бесплатный AI‑аудит вашей онлайн‑школы или блога + готовое решение за 48 часов</h1>
+          <p class="lead">Получите бесплатный персональный разбор, где и как можно автоматизировать ваш блог и продажи с помощью AI. За 48 часов внедрим одно готовое решение без оплаты. Представьте: ещё вчера вы тонули в постах, переписках и рутине, а уже через 2 дня часть этой работы делает за вас AI.</p>
+          <div class="cta-wrap">
+            <button class="btn" id="openModalBtn2">Записаться на бесплатный аудит</button>
+            <span class="note">0 ₽ / $0 · 48 часов на внедрение одного решения · права и доступы остаются у вас</span>
+          </div>
+        </div>
+        <div class="card hero-benefits">
+          <h3>Что получите через 48 ч</h3>
+          <ul class="clean">
+            <li>✅ Бесплатный AI‑аудит: разбор контента, продаж, воронок и коммуникаций</li>
+            <li>✅ Бесплатное внедрение <b>1 рабочего решения</b> под вашу цель</li>
+            <li>✅ Полный комплект промптов, шаблонов и SOP для самостоятельных правок</li>
+            <li>✅ Короткий отчёт «до/после» с фактами и следующими шагами</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- What we can automate -->
+    <section id="capabilities" class="section container">
+      <h2>Что мы можем автоматизировать для вас с помощью AI</h2>
+      <div class="grid cols-3">
+        <div class="card">
+          <h3>AI для контента</h3>
+          <ul class="clean">
+            <li>• Нейроаватар для Reels: пишет сценарии, «снимается» и генерирует визуал</li>
+            <li>• AI‑ассистент постов/статей в вашем стиле</li>
+            <li>• AI для лид‑магнитов: PDF‑гайды, чек‑листы, материалы</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>AI для продаж</h3>
+          <ul class="clean">
+            <li>• AI‑продавец в Instagram/Telegram: переписки 24/7, ответы на возражения</li>
+            <li>• AI‑менеджер заявок: лиды в CRM, напоминания об оплате</li>
+            <li>• AI‑воронка: прогрев и продажи на автопилоте</li>
+            <li>• Скрипты и автописьма для рассылок и повторных продаж</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>AI для учеников</h3>
+          <ul class="clean">
+            <li>• AI‑куратор 24/7: отвечает, проверяет ДЗ, напоминает о дедлайнах</li>
+            <li>• Генератор обучающих материалов</li>
+            <li>• Личный AI‑наставник: персональные рекомендации</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>AI для бизнес‑процессов</h3>
+          <ul class="clean">
+            <li>• Нейроаватар для вебинаров и уроков</li>
+            <li>• AI‑аналитик: показывает, что реально приносит заявки и продажи</li>
+            <li>• AI‑планировщик: управление задачами и проектами</li>
+            <li>• Автосегментация аудитории для точного таргетинга</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Process: 3 steps -->
+    <section id="process" class="section container">
+      <h2>От хаоса и рутины к свободе и росту: 3 шага</h2>
+      <div class="card timeline">
+        <div class="step">
+          <div class="num"></div>
+          <div>
+            <h3>1) Бесплатный AI‑аудит</h3>
+            <p class="muted">Разбираем ваш блог/школу: контент, продажи, воронки, коммуникацию. Находим точки, где AI даст быстрый и заметный результат.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="num"></div>
+          <div>
+            <h3>2) Бесплатное внедрение одного решения</h3>
+            <p class="muted">За 48 часов внедрим одно готовое решение, которое сразу принесёт результат.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="num"></div>
+          <div>
+            <h3>3) Полный пакет внедрений и сопровождения</h3>
+            <p class="muted">Если вам понравится результат — подключаем полную интеграцию AI в процессы на платной основе.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Offer: only 3 seats -->
+    <section id="offer" class="section container">
+      <div class="card">
+        <h2>Хочу взять только 3 проекта на этот оффер</h2>
+        <p class="muted">Сейчас мы запускаем тест нового формата работы и берём всего три человека. Вместе пройдём путь от хаоса и рутины — до чёткой системы, где AI берёт на себя самое скучное, а вы занимаетесь только тем, что любите.</p>
+        <p class="muted">📌 <b>Только 3 места.</b> Кто успел — тот и забрал.</p>
+      </div>
+    </section>
+
+    <!-- About Rustam -->
+    <section id="about" class="section container">
+      <div class="grid cols-2">
+        <div class="card">
+          <h2>Кто за этим стоит — Рустам Михайлов</h2>
+          <ul class="clean">
+            <li>• 7 лет в бизнес‑маркетинге</li>
+            <li>• Медиа‑продюсер известных бизнесменов</li>
+            <li>• Запускал воронки и упаковывал продукты для блогеров‑миллионников</li>
+            <li>• Основатель международного AI‑агентства (работаем с Украиной и Европой)</li>
+            <li>• Внедрял AI‑решения для компаний из списка Forbes</li>
+            <li>• Создавал AI‑видео для Monobank, Glovo, Novaposhta</li>
+          </ul>
+          <div class="client-logos" aria-label="Компании, для которых мы делали проекты">
+            <img src="assets/Monobank_logo.svg.png" alt="Monobank" title="Monobank">
+            <img src="assets/639e2508-399e-4297-b9ba-08d772ba24b2.png" alt="Glovo" title="Glovo">
+            <img src="assets/cb95262f-c5cb-482a-bfab-8fff1a91aa18.png" alt="Нова пошта" title="Нова пошта">
+          </div>
+        </div>
+        <div class="card">
+          <div class="portrait">
+            <img src="assets/rustam.jpg" alt="Рустам Михайлов" width="720" height="900" loading="lazy" decoding="async">
+            <span class="label">Рустам · AI‑архитектор</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cases -->
+    <section id="cases" class="section container">
+      <h2>Как AI уже приносит результаты нашим клиентам <span class="muted" style="font-size:16px">· показываем ~5% кейсов</span></h2>
+      <div class="grid cols-3 cases-grid">
+        <!-- Case 1: UIT -->
+        <article class="card case-card">
+          <header>
+            <div class="case-meta">
+              <span class="badge">Ниша: Сообщество инвесторов</span>
+              <span class="pill">UIT</span>
+            </div>
+            <h3>Рост заявок и вовлечённости в комьюнити</h3>
+          </header>
+          <div class="case-body">
+            <p class="muted"><b>Задача:</b> Усилить бренд, увеличить вовлечённость участников и автоматизировать продажи внутри сообщества.</p>
+            <ul class="clean ticks">
+              <li>Серия виральных AI‑видео для популяризации бренда и привлечения новых участников.</li>
+              <li>AI‑агент — обрабатывает входящие заявки, общается с потенциальными участниками и продаёт доступ в комьюнити.</li>
+              <li>AI‑ассистент — создаёт обучающие посты из материалов встреч и вебинаров.</li>
+            </ul>
+            <div class="metrics">
+              <div class="metric"><span class="val">+40%</span><span class="label">заявок за 1 месяц</span></div>
+              <div class="metric"><span class="val">−8 ч/нед</span><span class="label">рутины у команды</span></div>
+              <div class="metric"><span class="val">+32%</span><span class="label">вовлечённость в чатах</span></div>
+            </div>
+          </div>
+          <footer class="case-foot"><span class="pill">48‑часовой спринт → внедрение</span></footer>
+        </article>
+
+        <!-- Case 2: Тая -->
+        <article class="card case-card">
+          <header>
+            <div class="case-meta">
+              <span class="badge">Ниша: Наставничество · e‑commerce</span>
+              <span class="pill">Тая</span>
+            </div>
+            <h3>Запуск наставничества по созданию онлайн‑магазинов</h3>
+          </header>
+          <div class="case-body">
+            <p class="muted"><b>Задача:</b> Запустить первый онлайн‑продукт без опыта в онлайн‑курсах, выстроить стратегию продвижения и продаж.</p>
+            <ul class="clean ticks">
+              <li>С помощью AI сформировали продуктовую линейку и оффер.</li>
+              <li>Разработали стратегию прогрева и контент‑план.</li>
+              <li>Настроили чат‑бота, который квалифицировал клиентов и направлял к покупке.</li>
+              <li>Автоматизировали коммуникацию с аудиторией на всех этапах запуска.</li>
+            </ul>
+            <div class="metrics">
+              <div class="metric"><span class="val">$10 000</span><span class="label">в первом запуске</span></div>
+              <div class="metric"><span class="val">≈500</span><span class="label">охват аудитории</span></div>
+              <div class="metric"><span class="val">Авто</span><span class="label">процессы и коммуникации</span></div>
+            </div>
+          </div>
+          <footer class="case-foot"><span class="pill">От идеи до продаж</span></footer>
+        </article>
+
+        <!-- Case 3: Наш продукт (dogfooding) -->
+        <article class="card case-card">
+          <header>
+            <div class="case-meta">
+              <span class="badge">Наш продукт</span>
+              <span class="pill">Онлайн‑школа по ИИ</span>
+            </div>
+            <h3>Мы сами используем свою технологию</h3>
+          </header>
+          <div class="case-body">
+            <p class="muted"><b>Задача:</b> Запустить онлайн‑школу по искусственному интеллекту с минимальными затратами и командой.</p>
+            <ul class="clean ticks">
+              <li>С помощью AI проанализировали ЦА и выбрали наиболее востребованные темы.</li>
+              <li>Создали рекламные креативы и тексты для продвижения.</li>
+              <li>Полностью сгенерировали бесплатные материалы и мини‑курс: сценарии, видеоуроки, презентации.</li>
+              <li>Настроили продажи и воронку, автоматизировав <b>80%</b> задач.</li>
+            </ul>
+            <div class="metrics">
+              <div class="metric"><span class="val">$15 000</span><span class="label">в первый месяц</span></div>
+              <div class="metric"><span class="val">80%</span><span class="label">процессов автоматизировано</span></div>
+              <div class="metric"><span class="val">Lean</span><span class="label">без расширенной команды</span></div>
+            </div>
+          </div>
+          <footer class="case-foot"><span class="pill">Dogfooding: делаем так же, как для клиентов</span></footer>
+        </article>
+      </div>
+    </section>
+
+    <!-- Post-offer support (no explicit pricing) -->
+    <section id="solutions" class="section container">
+      <h2>Полный пакет внедрений и сопровождения</h2>
+      <div class="card">
+        <p class="muted">После бесплатного внедрения 1 решения договариваемся о масштабировании: интеграция AI в контент, продажи, обучение и бизнес‑процессы. Стоимость обсуждаем индивидуально под ваши цели и объёмы.</p>
+      </div>
+    </section>
+
+    <section id="faq" class="section container">
+      <h2>FAQ</h2>
+      <div class="grid cols-2">
+        <div class="card">
+          <h3>Это точно бесплатно?</h3>
+          <p class="muted">Да. Аудит и внедрение <b>одного</b> решения за 48 ч — бесплатно. Дальше — по желанию: полный пакет внедрений на платной основе.</p>
+        </div>
+        <div class="card">
+          <h3>Что именно вы внедряете за 48 часов?</h3>
+          <p class="muted">Выбираем точку максимального эффекта: AI‑продавец, чат‑бот, контент‑ассистент, мини‑воронка и т. п. — в зависимости от задачи.</p>
+        </div>
+        <div class="card">
+          <h3>Какие нужны доступы?</h3>
+          <p class="muted">Ссылки на контент/FAQ, доступ к IG/Telegram (или менеджеру), таблица/CRM для отчётности.</p>
+        </div>
+        <div class="card">
+          <h3>Сколько моего времени потребуется?</h3>
+          <p class="muted">~30 мин на аудит и ~30 мин на демонстрацию. Остальное делаем мы.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="book" class="section container">
+      <div class="card">
+        <h2>Готовы на бесплатный AI‑аудит и внедрение 1 решения за 48 часов?</h2>
+        <p class="muted">Оставьте контакты — подтвердим слот (из 3) и начнём с аудита.</p>
+        <button class="btn" onclick="openModal()">Записаться на бесплатный аудит</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="grid cols-2">
+        <div>
+          <strong>AI Sprint</strong>
+          <p class="muted">© 2025. Все права защищены. Решения внедряются на ваших доступах, промпты и шаблоны остаются у вас.</p>
+        </div>
+        <div>
+          <p class="muted">Правовая часть: проверьте требования площадок (Meta/TikTok/YouTube) и политику использования AI‑контента для вашей ниши.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal form -->
+  <div class="modal" id="modal">
+    <div class="panel">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
+        <h3 style="margin:0">Заявка на бесплатный AI‑аудит</h3>
+        <button class="close" onclick="closeModal()">✕</button>
+      </div>
+      <p class="note">Заполняя форму, вы бронируете один из <b>3</b> слотов. Аудит и внедрение <b>1 решения</b> за 48 часов — бесплатно.</p>
+      <form onsubmit="event.preventDefault(); alert('Спасибо! Заявка отправлена. Мы свяжемся с вами в ближайшее время.'); closeModal();">
+        <div class="form-row cols-2">
+          <div>
+            <label>Имя</label>
+            <input required placeholder="Имя">
+          </div>
+          <div>
+            <label>Телеграм / WhatsApp</label>
+            <input required placeholder="@username или номер">
+          </div>
+        </div>
+        <div class="form-row cols-2">
+          <div>
+            <label>Ниша</label>
+            <input required placeholder="Онлайн‑школа, блог, клуб…">
+          </div>
+          <div>
+            <label>Цель (что хотели бы автоматизировать)</label>
+            <select required>
+              <option value="">Выберите…</option>
+              <option>Контент/нейроаватар/лид‑магниты</option>
+              <option>Продажи/AI‑продавец/воронка</option>
+              <option>Курация/обучение/наставник</option>
+              <option>Бизнес‑процессы/аналитика</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <label>Ссылки на контент / материалы</label>
+          <textarea placeholder="YouTube, Instagram, лендинг, записи вебинаров…"></textarea>
+        </div>
+        <div class="form-row cols-2">
+          <div>
+            <label>Желаемая дата старта</label>
+            <input type="date">
+          </div>
+          <div>
+            <label>Часовой пояс</label>
+            <input placeholder="например, Europe/Warsaw">
+          </div>
+        </div>
+        <div class="form-row">
+          <button class="btn" type="submit">Отправить заявку</button>
+          <button class="btn secondary" type="button" onclick="closeModal()">Отмена</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const modal = document.getElementById('modal');
+    function openModal(){ modal.classList.add('show'); }
+    function closeModal(){ modal.classList.remove('show'); }
+    document.getElementById('openModalBtn').addEventListener('click', openModal);
+    document.getElementById('openModalBtn2').addEventListener('click', openModal);
+  </script>
+</body>
+</html>
