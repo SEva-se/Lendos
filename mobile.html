@@ -176,6 +176,104 @@
 @media (min-width: 900px){
   .site-header .container{ padding-left:24px; padding-right:24px; }
 }
+/* mobile.css — мобильная «база» поверх существующих стилей
+   Цели: mobile-first сетка, два брейкпоинта (768px/1024px),
+   типографика через clamp, 44px tap targets, отсутствие горизонтального скролла. */
+
+/* ---------- Токены: отступы и длина строки ---------- */
+:root{
+  --space-1: clamp(6px, 1.2vw, 10px);
+  --space-2: clamp(10px, 2vw, 16px);
+  --space-3: clamp(16px, 3vw, 24px);
+  --space-4: clamp(24px, 5vw, 40px);
+  --measure: 65ch; /* ~65 символов для удобочитаемости */
+}
+
+/* Нет горизонтального скролла на узких экранах */
+html, body { overflow-x: hidden; }
+
+/* ---------- Типографика через clamp ---------- */
+h1{ font-size: clamp(28px, 7vw, 44px); line-height: 1.15; }
+h2{ font-size: clamp(20px, 4.2vw, 28px); }
+h3{ font-size: clamp(18px, 3.2vw, 22px); }
+p, .muted { max-width: var(--measure); }
+p.lead{ font-size: clamp(16px, 2.8vw, 18px); max-width: var(--measure); }
+
+/* ---------- Контейнеры и секции ---------- */
+.section{ padding: var(--space-4) 0; }
+.container{ padding-left: var(--space-3); padding-right: var(--space-3); }
+
+/* ---------- Сетка: mobile-first ---------- */
+.grid{ display: grid; gap: var(--space-2); }
+.grid.cols-2{ grid-template-columns: 1fr; }   /* базово одна колонка */
+.grid.cols-3{ grid-template-columns: 1fr; }
+
+@media (min-width:768px){
+  .grid.cols-2{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .grid.cols-3{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+}
+@media (min-width:1024px){
+  .grid.cols-3{ grid-template-columns: repeat(3, minmax(0,1fr)); }
+}
+
+/* ---------- Tap targets ≥44px ---------- */
+.btn{ min-height: 44px; }
+nav.topnav a{ display:inline-flex; align-items:center; min-height:44px; padding-block: 10px; }
+
+/* ---------- Изображения ---------- */
+/* HTML-атрибуты width/height оставлены — они помогают CLS; CSS не фиксирует размер */
+img{ max-width:100%; height:auto; display:block; }
+
+/* Переопределяем жёсткую высоту логотипов на max-height */
+.client-logos img{
+  height:auto;        /* было height:30px в inline-стилях — мы перекрываем */
+  max-height:30px;
+}
+
+/* ---------- Бургер-меню ---------- */
+.nav-toggle{
+  display:inline-flex;
+  align-items:center; justify-content:center;
+  width:44px; height:44px; margin-left:auto;
+  background:transparent; border:1px solid var(--border);
+  border-radius:10px; cursor:pointer;
+}
+.nav-toggle .bar{
+  display:block; width:22px; height:2px; background:var(--text);
+  border-radius:2px;
+}
+.nav-toggle .bar + .bar{ margin-top:5px; }
+
+/* Панель меню на мобиле */
+.nav-panel{
+  display:none;
+  position:fixed; inset: var(--header-offset, 56px) 0 0 0;
+  background: rgba(12,17,25,.98);
+  border-top:1px solid var(--border);
+  padding: var(--space-3);
+  overflow:auto;
+}
+.nav-panel a, .nav-panel .pill, .nav-panel .tag{
+  display:flex; align-items:center;
+  padding-block: 10px; /* 44px tap-цели */
+}
+body.nav-open .nav-panel{ display:block; }
+
+/* На десктопе: обычный инлайн-лейаут, бургер скрыт */
+@media (min-width:768px){
+  .nav-toggle{ display:none; }
+  .nav-panel{
+    position:static; display:flex !important; background:transparent;
+    border:0; padding:0; overflow:visible;
+    gap:16px;
+  }
+  .nav-panel .spacer{ flex:1; display:block; }
+}
+
+/* ---------- Мелкие UX-улучшения ---------- */
+.hero .lead{ max-width: var(--measure); }
+.pill, .tag{ white-space: nowrap; }
+.sticky-cta .bar{ padding: 10px var(--space-2); }
 
 /* Вертикальные отступы не трогаем: 
    .site-header .inner{ padding:12px 0 }  */
@@ -233,18 +331,14 @@
             <a class="btn" target="_blank" rel="noopener" href="https://docs.google.com/forms/d/e/1FAIpQLScvjiIQNH8hCzRgOk6-HXiuqrDC39RZ9Ddr6-ozR0WX-wAntQ/viewform?utm_source=hero">Записаться на бесплатный аудит</a>
             <a class="btn secondary" href="#cases">Смотреть кейсы</a>
           </div>
-          <div class="kpi">
-            <span class="chip">0 ₽ / $0</span>
-            <span class="chip"><span class="highlight">MVP</span> за 48 часов</span>
-            <span class="chip">Доступы и промпты остаются <span class="highlight-2">у вас</span></span>
-          </div>
+          
         </div>
         <div class="card hero-benefits reveal">
           <h3>Что получите через <span class="highlight">48 ч</span></h3>
           <ul class="clean">
             <li><svg class="icon" width="20" height="20" aria-hidden="true"><use href="#i-check"/></svg> <b class="highlight">AI‑аудит</b>: разбор контента, продаж, воронок и коммуникаций</li>
-            <li><svg class="icon" width="20" height="20" aria-hidden="true"><use href="#i-check"/></svg> <b class="highlight-2">Внедрение 1 рабочего решения</b> под вашу цель</li>
-            <li><svg class="icon" width="20" height="20" aria-hidden="true"><use href="#i-check"/></svg> <b class="highlight">Промпты, шаблоны и SOP</b> для самостоятельных правок</li>
+            <li><svg class="icon" width="20" height="20" aria-hidden="true"><use href="#i-check"/></svg> <b class="highlight-2">Внедрение 1 рабочего решения бесплатно</b> под вашу цель</li>
+            <li><svg class="icon" width="20" height="20" aria-hidden="true"><use href="#i-check"/></svg> <b class="highlight">Промпты, шаблоны и Алгоритмы</b> для самостоятельных правок</li>
             <li><svg class="icon" width="20" height="20" aria-hidden="true"><use href="#i-check"/></svg> Короткий отчёт «<span class="highlight">до/после</span>» с фактами и следующими шагами</li>
           </ul>
         </div>
@@ -258,22 +352,23 @@
         <div class="card reveal">
           <h3><svg class="icon" width="18" height="18" aria-hidden="true"><use href="#i-cpu"/></svg> AI для <span class="highlight">контента</span></h3>
           <ul class="clean">
-            <li><span class="highlight">Нейроаватар</span> для Reels: пишет сценарии, «снимается» и генерирует визуал</li>
-            <li>AI‑ассистент постов/статей <span class="highlight-2">в вашем стиле</span></li>
+            <li><span class="highlight">AI для Reels</span>  нейроаватар, которого невозможно отличить от живого человека: сам пишет сценарии, снимается в видео и генерирует визуал</li>
+            <li> <span class="highlight-2">AI-ассистент</span> пишет тексты в вашем стиле для соцсетей, блога и рассылок
+</li>
             <li>AI для <span class="highlight">лид‑магнитов</span>: PDF‑гайды, чек‑листы, материалы</li>
           </ul>
         </div>
         <div class="card reveal">
           <h3><svg class="icon" width="18" height="18" aria-hidden="true"><use href="#i-zap"/></svg> AI для <span class="highlight">продаж</span></h3>
           <ul class="clean">
-            <li>AI‑продавец в Instagram/Telegram: переписки <span class="highlight">24/7</span>, ответы на возражения</li>
-            <li>AI‑менеджер заявок: лиды в CRM, напоминания об оплате</li>
+            <li> <span class="highlight">AI-продавец в Instagram - Telegram </span>ведёт переписки вместо вас</li>
+            <li>AI‑менеджер заявок. Фиксирует лидов в CRM, напоминания об оплате</li>
             <li>AI‑воронка: <span class="highlight-2">прогрев</span> и продажи на автопилоте</li>
             <li>Скрипты и автописьма для повторных продаж</li>
           </ul>
         </div>
         <div class="card reveal">
-          <h3><svg class="icon" width="18" height="18" aria-hidden="true"><use href="#i-shield"/></svg> AI для <span class="highlight">учеников</span></h3>
+          <h3><svg class="icon" width="18" height="18" aria-hidden="true"><use href="#i-shield"/></svg> AI для ваших <span class="highlight">учеников</span></h3>
           <ul class="clean">
             <li>AI‑куратор <span class="highlight">24/7</span>: отвечает, проверяет ДЗ, напоминает о дедлайнах</li>
             <li>Генератор обучающих материалов</li>
@@ -283,10 +378,10 @@
         <div class="card span-3 reveal">
           <h3>AI для <span class="highlight">бизнес‑процессов</span></h3>
           <ul class="clean">
-            <li><span class="highlight">Нейроаватар</span> для вебинаров и уроков, записывает модули автоматически, держит стиль</li>
-            <li>AI‑аналитик: показывает, что реально приносит заявки и продажи, строит отчёты и рекомендует шаги для роста</li>
-            <li>AI‑планировщик: управление задачами и проектами, сроки, исполнители, напоминания и приоритеты</li>
-            <li>Автосегментация аудитории, <span class="highlight-2">персональные предложения</span> и цепочки писем</li>
+            <li><span class="highlight">Нейроаватар</span> для вебинаров и уроков — записывает уроки вместо вас.</li>
+            <li><span class="highlight">AI-аналитик</span>  показывает, что реально приносит заявки и продажи.</li>
+            <li><span class="highlight">AI-планировщик </span> управляет задачами и проектами команды.</li>
+            <li><span class="highlight">Автосегментация</span> аудитории  для </span>точного таргетинга и персональных офферов.</li>
           </ul>
         </div>
       </div>
@@ -294,7 +389,8 @@
 
     <!-- PROCESS -->
     <section id="process" class="section container">
-      <h2 class="reveal">От хаоса и рутины к свободе и росту: <span class="highlight">3 шага</span></h2>
+      <h2 class="reveal">От хаоса и рутины к свободе и росту: <span class="highlight">3 шага, как мы это сделаем вместе
+</span></h2>
       <div class="card timeline reveal">
         <div class="step">
           <div class="num" aria-hidden="true"></div>
@@ -306,7 +402,7 @@
         <div class="step">
           <div class="num" aria-hidden="true"></div>
           <div>
-            <h3>2) <span class="highlight-2">Внедрение</span> одного решения за <span class="grad">48 часов</span></h3>
+            <h3>2) <span class="highlight-2">Внедрение</span> одного решения за <span class="grad">48 часов БЕСПЛАТНО</span></h3>
             <p class="muted">Внедряем готовое решение, которое сразу приносит результат.</p>
           </div>
         </div>
@@ -314,7 +410,7 @@
           <div class="num" aria-hidden="true"></div>
           <div>
             <h3>3) <span class="highlight">Полный пакет</span> внедрений и сопровождения</h3>
-            <p class="muted">Если вам понравится результат — подключаем интеграцию AI в процессы на платной основе.</p>
+            <p class="muted">Если вам понравится результат — подключаем интеграцию AI в ваши процессы на платной основе.</p>
           </div>
         </div>
       </div>
@@ -365,9 +461,9 @@
           <header>
             <div class="case-meta">
               <span class="badge">Ниша: Сообщество инвесторов</span>
-              <span class="pill">UIT</span>
+             
             </div>
-            <h3>Рост заявок и вовлечённости в комьюнити</h3>
+            
           </header>
           <div class="case-body">
             <p class="muted"><b class="highlight">Задача:</b> Усилить бренд, увеличить вовлечённость и автоматизировать продажи.</p>
@@ -389,9 +485,9 @@
           <header>
             <div class="case-meta">
               <span class="badge">Ниша: Наставничество · e‑commerce</span>
-              <span class="pill">Тая</span>
+              
             </div>
-            <h3>Запуск наставничества по созданию онлайн‑магазинов</h3>
+            
           </header>
           <div class="case-body">
             <p class="muted"><b class="highlight">Задача:</b> Запустить первый онлайн‑продукт, выстроить стратегию и продажи.</p>
@@ -416,10 +512,10 @@
               <span class="badge">Наш продукт</span>
               <span class="pill">Онлайн‑школа по ИИ</span>
             </div>
-            <h3>Мы сами используем свою технологию</h3>
+            
           </header>
           <div class="case-body">
-            <p class="muted"><b class="highlight">Задача:</b> Запустить онлайн‑школу по искусственному интеллекту минимальными силами.</p>
+            <p class="muted"><b class="highlight">Задача:</b> Запустить онлайн‑школу по искусственному интеллекту с минимальными силами.</p>
             <ul class="clean ticks">
               <li><svg class="icon" width="18" height="18" aria-hidden="true"><use href="#i-check"/></svg> Проанализировали ЦА и выбрали наиболее востребованные темы.</li>
               <li><svg class="icon" width="18" height="18" aria-hidden="true"><use href="#i-check"/></svg> Создали рекламные креативы и тексты.</li>
@@ -429,7 +525,7 @@
             <div class="metrics">
               <div class="metric"><span class="val">$15 000</span><span class="label">в первый месяц</span></div>
               <div class="metric"><span class="val">80%</span><span class="label">процессов на автомате</span></div>
-              <div class="metric"><span class="val">Lean</span><span class="label">без расширенной команды</span></div>
+              <div class="metric"><span class="val">Запуск</span><span class="label">без расширенной команды</span></div>
             </div>
           </div>
           <footer class="case-foot"><span class="pill">Решение → +15% KPI</span></footer>
