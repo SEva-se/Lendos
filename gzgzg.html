@@ -22,83 +22,99 @@
   <style>
     :root{
       --bg:#0b0d12; --card:#12151c; --muted:#9aa4b2; --text:#ecf0f3; --accent:#6ee7ff; --accent-2:#a7f3d0; --danger:#ff6b6b; --ok:#22c55e; --border:#1e2230; --title:#ffcc70;
+      /* Типографика и отступы — mobile-first */
+      --step-0: clamp(15px, 3.5vw, 16px);
+      --step-1: clamp(18px, 4.2vw, 22px);
+      --step-2: clamp(22px, 5.2vw, 28px);
+      --step-3: clamp(28px, 7vw, 44px);
+      --lead:   clamp(16px, 4.2vw, 18px);
+      --space-1: clamp(8px, 2.5vw, 12px);
+      --space-2: clamp(12px, 3.5vw, 18px);
+      --space-3: clamp(16px, 4.5vw, 28px);
+      --radius: 18px;
     }
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
     html,body{margin:0;padding:0;color:var(--text);
-      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial; font-size:16px; line-height:1.6;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial; font-size:var(--step-0); line-height:1.6;
       background:
         radial-gradient(800px 500px at 90% -10%, rgba(110,231,255,.10), transparent 60%),
         radial-gradient(700px 500px at -10% 20%, rgba(167,243,208,.08), transparent 60%),
         linear-gradient(#0b0d12,#0b0d12);
+      overflow-x:hidden;
     }
-    h1,h2,h3{font-family:"Space Grotesk",Inter,system-ui,sans-serif}
-    h1{font-size:44px;line-height:1.1;margin:.2rem 0 1rem}
-    h2{font-size:28px;margin:0 0 1rem}
-    h3{font-size:22px;margin:0 0 .6rem}
-    p.lead{font-size:1.12rem;color:#cfd6de;max-width:800px}
+    h1,h2,h3{font-family:"Space Grotesk",Inter,system-ui,sans-serif; margin:.2rem 0 .8rem}
+    h1{font-size:var(--step-3); line-height:1.12}
+    h2{font-size:var(--step-2); line-height:1.2}
+    h3{font-size:var(--step-1); line-height:1.25}
+    p.lead{font-size:var(--lead); color:#cfd6de; max-width:70ch}
 
     a{color:inherit;text-decoration:none}
     img{max-width:100%;height:auto;display:block}
-    .container{max-width:1100px;margin:0 auto;padding:0 20px;position:relative}
+    .container{max-width:1100px;margin:0 auto;padding-inline: clamp(16px,4vw,24px);position:relative}
 
-    /* Accent helpers (INLINE by default) */
     .highlight{color:var(--accent);font-weight:700;display:inline}
     .highlight-2{color:var(--accent-2);font-weight:700;display:inline}
     .grad{background:linear-gradient(90deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:800;display:inline}
 
-    /* Buttons */
-    .btn{display:inline-flex;align-items:center;gap:.6rem;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#0b0d12;border:none;border-radius:12px;padding:14px 18px;font-weight:700;cursor:pointer;box-shadow:0 8px 30px rgba(110,231,255,.15)}
+    .btn{display:inline-flex;align-items:center;gap:.6rem;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#0b0d12;border:none;border-radius:12px;padding:14px 18px;font-weight:700;cursor:pointer;box-shadow:0 8px 30px rgba(110,231,255,.15); min-height:44px}
     .btn:hover{filter:saturate(110%);transform:translateY(-1px)}
     .btn:active{transform:translateY(0)}
     .btn.secondary{background:#1f2432;color:var(--text);border:1px solid var(--border);box-shadow:none}
 
-    .tag{display:inline-flex;align-items:center;gap:.4rem;border:1px solid var(--border);border-radius:999px;padding:4px 10px;color:#c4cfdb;font-size:.85rem;background:#0d111a}
+    .tag{display:inline-flex;align-items:center;gap:.4rem;border:1px solid var(--border);border-radius:999px;padding:4px 10px;color:#c4cfdb;font-size:.92rem;background:#0d111a}
     .pill{display:inline-flex;align-items:center;gap:.5rem;background:#121720;border:1px solid var(--border);padding:6px 10px;border-radius:999px}
 
     .grid{display:grid;gap:18px}
-    .grid.cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
-    .grid.cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
-    @media (max-width:900px){.grid.cols-2,.grid.cols-3{grid-template-columns:1fr}}
+    .grid.cols-2{grid-template-columns:1fr}
+    .grid.cols-3{grid-template-columns:1fr}
+    @media (min-width:900px){.grid.cols-2{grid-template-columns:repeat(2,minmax(0,1fr))} .grid.cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}}
 
-    .card{background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,0));border:1px solid var(--border);border-radius:18px;padding:18px;position:relative}
+    .card{background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,0));border:1px solid var(--border);border-radius:var(--radius);padding:18px;position:relative}
     .card.emph{border-image:linear-gradient(90deg,var(--accent),var(--accent-2)) 1;border-width:1px}
     .card::after{content:"";position:absolute;inset:-1px;border-radius:inherit;background:radial-gradient(300px 220px at 85% -10%, rgba(110,231,255,.12), transparent 60%);pointer-events:none}
 
     ul.clean{list-style:none;padding-left:0;margin:0}
-    /* FIX: inline flow for list items so spans don't break lines */
     ul.clean li{margin:.35rem 0}
 
     .muted{color:var(--muted)}
     .divider{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:26px 0}
-    .section{padding:32px 0;position:relative}
+    .section{padding-block: var(--space-3);position:relative}
     .section::before{content:"";position:absolute;inset:auto;left:50%;transform:translateX(-50%);top:-1px;width:60%;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent)}
 
-    /* Header */
+    /* Header — бургер-меню */
     .site-header{position:sticky;top:0;backdrop-filter:saturate(140%) blur(8px);-webkit-backdrop-filter:blur(8px) saturate(140%);background:rgba(11,13,18,.6);border-bottom:1px solid var(--border);z-index:1000}
-    .site-header .inner{padding:12px 0}
-    .brand-title{font-family:'Orbitron',sans-serif;font-weight:700;font-size:1.25rem;color:var(--title);white-space:nowrap;margin-right:10px}
-    nav.topnav{display:flex;align-items:center;gap:16px;flex-wrap:nowrap}
-    nav.topnav a{opacity:.85}
-    nav.topnav a:hover{opacity:1}
-    nav.topnav .spacer{flex:1}
-    @media (max-width:700px){ nav.topnav{overflow-x:auto;white-space:nowrap} }
+    .site-header .inner{padding-block:12px}
+    .brand-title{font-family:'Orbitron',sans-serif;font-weight:700;font-size:1.1rem;color:var(--title);white-space:nowrap;margin-right:10px}
+    nav.topnav{display:grid;gap:12px}
+    .topnav .brand{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .nav-toggle{display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--border);background:#0d111a;color:#e5e7eb;border-radius:12px;min-height:44px;min-width:44px;padding:0 12px;cursor:pointer}
+    .nav-toggle svg{pointer-events:none}
+    .links{display:none;gap:12px}
+    .links.open{display:grid}
+    .links a{opacity:.9}
+    .links a:hover{opacity:1}
+    .links .spacer{display:none}
+    @media (min-width:900px){
+      nav.topnav{grid-template-columns:1fr}
+      .nav-toggle{display:none}
+      .links{display:flex !important;align-items:center;gap:16px}
+      .links .spacer{display:block;flex:1}
+    }
 
-    /* Hero */
-    .hero{padding:56px 0 24px;position:relative;overflow:hidden}
+    .hero{padding:34px 0 24px;position:relative;overflow:hidden}
     .hero::before,.hero::after{content:"";position:absolute;inset:auto;pointer-events:none;filter:blur(40px);opacity:.65}
     .hero::before{width:520px;height:520px;right:-120px;top:-140px;background:radial-gradient(closest-side, rgba(110,231,255,.14), transparent 70%)}
     .hero::after{width:520px;height:520px;left:-160px;bottom:-160px;background:radial-gradient(closest-side, rgba(167,243,208,.12), transparent 70%)}
 
     .hero-benefits{display:grid;grid-template-rows:auto 1fr}
-    .hero-benefits .clean{display:grid;align-content:space-between;row-gap:10px;height:100%;font-size:1.04rem}
+    .hero-benefits .clean{display:grid;align-content:space-between;row-gap:10px;height:100%;font-size:1.02rem}
     .hero-benefits .clean li{padding:10px 12px;border-radius:12px;border:1px solid var(--border);background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,0));box-shadow:0 1px 0 rgba(255,255,255,.03) inset}
     .hero-benefits .clean b{color:#e7f8ff}
 
     .kpi{display:flex;gap:8px;flex-wrap:wrap;margin:.6rem 0 0}
     .kpi .chip{border:1px dashed var(--border);border-radius:8px;padding:6px 10px;color:#cfe7ff;font-size:.92rem}
 
-    /* Timeline */
     .timeline{position:relative}
     .step{display:grid;grid-template-columns:auto 1fr;gap:12px;padding:12px 0}
     .step + .step{border-top:1px dashed var(--border)}
@@ -107,7 +123,6 @@
     .step:nth-child(2) .num::after{content:"2"}
     .step:nth-child(3) .num::after{content:"3"}
 
-    /* Cases */
     .cases-grid{align-items:stretch}
     .case-card{display:grid;grid-template-rows:auto 1fr auto}
     .case-card h3{margin:.3rem 0 .4rem}
@@ -116,174 +131,49 @@
     .ticks{margin:6px 0 0}
     .ticks li{position:relative;padding:10px 12px 10px 30px;border-radius:12px;border:1px solid var(--border);background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,0))}
     .ticks li .icon{position:absolute;left:8px;top:10px;opacity:.9}
-    .metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:6px}
+    .metrics{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px}
+    @media (min-width:900px){.metrics{grid-template-columns:repeat(3,minmax(0,1fr))}}
     .metric{border:1px dashed var(--border);border-radius:12px;padding:10px 8px;text-align:center;background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,0))}
     .metric .val{font-weight:800;font-size:20px;line-height:1.1;background:linear-gradient(90deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent}
-    .metric .label{display:block;color:#cbd5e1;font-size:.86rem;margin-top:2px}
+    .metric .label{display:block;color:#cbd5e1;font-size:.9rem;margin-top:2px}
 
-    /* Portrait + client logos */
     .portrait{position:relative;max-width:420px;margin:0 auto;border-radius:20px;overflow:hidden;border:1px solid var(--border);background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,0));box-shadow:0 10px 40px rgba(110,231,255,.08)}
     .portrait::before{content:"";position:absolute;inset:-1px;border-radius:inherit;pointer-events:none;mix-blend:screen;opacity:.55;background:
       radial-gradient(240px 160px at 85% 0%, rgba(110,231,255,.35), transparent 60%),
       radial-gradient(200px 160px at 0% 100%, rgba(167,243,208,.28), transparent 60%)}
     .portrait .label{position:absolute;left:12px;bottom:12px;background:#0c1119cc;border:1px solid var(--border);padding:6px 10px;border-radius:10px;font-weight:700}
+    .portrait img{width:100%;height:auto}
 
-    .client-logos{display:flex;gap:24px;align-items:center;flex-wrap:wrap;padding-top:12px;opacity:.9}
-    .client-logos img{height:30px;filter:grayscale(.95);opacity:.85;transition:filter .2s,opacity .2s,transform .2s}
+    .client-logos{display:flex;gap:18px;align-items:center;flex-wrap:wrap;padding-top:12px;opacity:.9}
+    .client-logos img{height:28px;filter:grayscale(.95);opacity:.85;transition:filter .2s,opacity .2s,transform .2s}
     .client-logos img:hover{filter:none;opacity:1;transform:translateY(-1px)}
 
-    /* Utilities */
-    .inline{display:inline-flex;gap:.8rem;flex-wrap:wrap}
-    .warning{color:var(--danger)}
-    .footnote{font-size:.9rem;color:var(--muted)}
+    .inline{display:flex;flex-direction:column;gap:12px;flex-wrap:wrap}
+    @media (min-width:700px){.inline{flex-direction:row}}
+    .footnote{font-size:.92rem;color:var(--muted)}
 
-    /* Responsive tweaks */
-    @media (max-width:700px){
-      .hero{padding-top:34px}
-      .metrics{grid-template-columns:1fr 1fr}
-    }
-
-    /* Special: span-3 capability card */
-    @media (min-width:901px){
-      #capabilities .grid.cols-3 .card.span-3 { grid-column: 1 / -1; }
-    }
-
-    /* Sticky CTA for mobile */
-    .sticky-cta{position:fixed;left:0;right:0;bottom:12px;display:none;justify-content:center;z-index:1200}
+    .sticky-cta{position:fixed;left:0;right:0;bottom:12px;display:flex;justify-content:center;z-index:1200;padding-inline: clamp(8px, 4vw, 16px); padding-bottom: max(12px, env(safe-area-inset-bottom))}
     .sticky-cta .bar{backdrop-filter:blur(8px) saturate(130%);background:rgba(12,17,25,.7);border:1px solid var(--border);border-radius:16px;padding:10px;display:flex;gap:12px;align-items:center}
-    .sticky-cta .bar .txt{color:#cbd5e1;font-size:.92rem}
-    @media (max-width:780px){ .sticky-cta{display:flex} }
+    .sticky-cta .bar .txt{color:#cbd5e1;font-size:.95rem}
+    @media (min-width:780px){ .sticky-cta{display:none} }
 
-    /* Reveal animations */
     .reveal{opacity:0;transform:translateY(12px)}
     .reveal.in{opacity:1;transform:none;transition:opacity .45s ease, transform .45s ease}
     @media (prefers-reduced-motion: reduce){ .reveal,.reveal.in{opacity:1;transform:none;transition:none} }
 
-    /* Skip link */
     .skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
     .skip-link:focus{position:static;width:auto;height:auto;background:#111827;color:#fff;padding:8px;border-radius:8px}
-    /* Вставь этот блок ПОСЛЕ существующих стилей, чтобы сузить внутренние отступы у хедера */
 
-/* Было: padding-left/right: 40px;  Стало: 16–24px в зависимости от ширины */
-.site-header .container{
-  max-width:100%;
-  width:100%;
-  padding-left:16px;
-  padding-right:16px;
-}
+    .site-header .container{ max-width:100%; width:100%; padding-left:16px; padding-right:16px; }
+    @media (min-width:900px){ .site-header .container{ padding-left:24px; padding-right:24px; } }
 
-/* На десктопе чуть шире, но всё ещё компактнее, чем 40px */
-@media (min-width: 900px){
-  .site-header .container{ padding-left:24px; padding-right:24px; }
-}
-/* mobile.css — мобильная «база» поверх существующих стилей
-   Цели: mobile-first сетка, два брейкпоинта (768px/1024px),
-   типографика через clamp, 44px tap targets, отсутствие горизонтального скролла. */
-
-/* ---------- Токены: отступы и длина строки ---------- */
-:root{
-  --space-1: clamp(6px, 1.2vw, 10px);
-  --space-2: clamp(10px, 2vw, 16px);
-  --space-3: clamp(16px, 3vw, 24px);
-  --space-4: clamp(24px, 5vw, 40px);
-  --measure: 65ch; /* ~65 символов для удобочитаемости */
-}
-
-/* Нет горизонтального скролла на узких экранах */
-html, body { overflow-x: hidden; }
-
-/* ---------- Типографика через clamp ---------- */
-h1{ font-size: clamp(28px, 7vw, 44px); line-height: 1.15; }
-h2{ font-size: clamp(20px, 4.2vw, 28px); }
-h3{ font-size: clamp(18px, 3.2vw, 22px); }
-p, .muted { max-width: var(--measure); }
-p.lead{ font-size: clamp(16px, 2.8vw, 18px); max-width: var(--measure); }
-
-/* ---------- Контейнеры и секции ---------- */
-.section{ padding: var(--space-4) 0; }
-.container{ padding-left: var(--space-3); padding-right: var(--space-3); }
-
-/* ---------- Сетка: mobile-first ---------- */
-.grid{ display: grid; gap: var(--space-2); }
-.grid.cols-2{ grid-template-columns: 1fr; }   /* базово одна колонка */
-.grid.cols-3{ grid-template-columns: 1fr; }
-
-@media (min-width:768px){
-  .grid.cols-2{ grid-template-columns: repeat(2, minmax(0,1fr)); }
-  .grid.cols-3{ grid-template-columns: repeat(2, minmax(0,1fr)); }
-}
-@media (min-width:1024px){
-  .grid.cols-3{ grid-template-columns: repeat(3, minmax(0,1fr)); }
-}
-
-/* ---------- Tap targets ≥44px ---------- */
-.btn{ min-height: 44px; }
-nav.topnav a{ display:inline-flex; align-items:center; min-height:44px; padding-block: 10px; }
-
-/* ---------- Изображения ---------- */
-/* HTML-атрибуты width/height оставлены — они помогают CLS; CSS не фиксирует размер */
-img{ max-width:100%; height:auto; display:block; }
-
-/* Переопределяем жёсткую высоту логотипов на max-height */
-.client-logos img{
-  height:auto;        /* было height:30px в inline-стилях — мы перекрываем */
-  max-height:30px;
-}
-
-/* ---------- Бургер-меню ---------- */
-.nav-toggle{
-  display:inline-flex;
-  align-items:center; justify-content:center;
-  width:44px; height:44px; margin-left:auto;
-  background:transparent; border:1px solid var(--border);
-  border-radius:10px; cursor:pointer;
-}
-.nav-toggle .bar{
-  display:block; width:22px; height:2px; background:var(--text);
-  border-radius:2px;
-}
-.nav-toggle .bar + .bar{ margin-top:5px; }
-
-/* Панель меню на мобиле */
-.nav-panel{
-  display:none;
-  position:fixed; inset: var(--header-offset, 56px) 0 0 0;
-  background: rgba(12,17,25,.98);
-  border-top:1px solid var(--border);
-  padding: var(--space-3);
-  overflow:auto;
-}
-.nav-panel a, .nav-panel .pill, .nav-panel .tag{
-  display:flex; align-items:center;
-  padding-block: 10px; /* 44px tap-цели */
-}
-body.nav-open .nav-panel{ display:block; }
-
-/* На десктопе: обычный инлайн-лейаут, бургер скрыт */
-@media (min-width:768px){
-  .nav-toggle{ display:none; }
-  .nav-panel{
-    position:static; display:flex !important; background:transparent;
-    border:0; padding:0; overflow:visible;
-    gap:16px;
-  }
-  .nav-panel .spacer{ flex:1; display:block; }
-}
-
-/* ---------- Мелкие UX-улучшения ---------- */
-.hero .lead{ max-width: var(--measure); }
-.pill, .tag{ white-space: nowrap; }
-.sticky-cta .bar{ padding: 10px var(--space-2); }
-
-/* Вертикальные отступы не трогаем: 
-   .site-header .inner{ padding:12px 0 }  */
-
+    @media (max-width:700px){ .btn{width:100%} }
   </style>
 </head>
 <body>
   <a href="#main" class="skip-link">Перейти к содержанию</a>
 
-  <!-- SVG sprite (icons, без внешних зависимостей) -->
+  <!-- SVG sprite (icons) -->
   <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
     <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M20 6L9 17l-5-5"/>
@@ -297,21 +187,31 @@ body.nav-open .nav-panel{ display:block; }
     <symbol id="i-cpu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/>
     </symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+    </symbol>
   </svg>
 
   <header class="site-header" role="banner">
     <div class="container inner">
       <nav class="topnav" aria-label="Главная навигация">
-        <div class="brand-title">AI Sprint</div>
-        <span class="pill"><svg class="icon" width="16" height="16" aria-hidden="true"><use href="#i-zap"/></svg><span class="grad">48 часов</span></span>
-        <span class="pill"><span aria-hidden="true">🆓</span><span class="highlight">Аудит</span> + <span class="highlight-2">1 решение</span></span>
-        <a href="#solutions">Решения</a>
-        <a href="#process">Как это работает</a>
-        <a href="#capabilities">Что автоматизируем</a>
-        <a href="#cases">Кейсы</a>
-        <a href="#about">Кто мы</a>
-        <span class="spacer"></span>
-        <a class="btn" target="_blank" rel="noopener" href="https://docs.google.com/forms/d/e/1FAIpQLScvjiIQNH8hCzRgOk6-HXiuqrDC39RZ9Ddr6-ozR0WX-wAntQ/viewform?utm_source=header">Получить бесплатный аудит</a>
+        <div class="brand">
+          <div class="brand-title">AI Sprint</div>
+          <button class="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Меню">
+            <svg width="22" height="22" aria-hidden="true"><use href="#i-menu"/></svg>
+          </button>
+        </div>
+        <div id="nav-links" class="links">
+          <span class="pill"><svg class="icon" width="16" height="16" aria-hidden="true"><use href="#i-zap"/></svg><span class="grad">48 часов</span></span>
+          <span class="pill"><span aria-hidden="true">🆓</span><span class="highlight">Аудит</span> + <span class="highlight-2">1 решение</span></span>
+          <a href="#solutions">Решения</a>
+          <a href="#process">Как это работает</a>
+          <a href="#capabilities">Что автоматизируем</a>
+          <a href="#cases">Кейсы</a>
+          <a href="#about">Кто мы</a>
+          <span class="spacer"></span>
+          <a class="btn" target="_blank" rel="noopener" href="https://docs.google.com/forms/d/e/1FAIpQLScvjiIQNH8hCzRgOk6-HXiuqrDC39RZ9Ddr6-ozR0WX-wAntQ/viewform?utm_source=header">Получить бесплатный аудит</a>
+        </div>
       </nav>
     </div>
   </header>
@@ -331,7 +231,6 @@ body.nav-open .nav-panel{ display:block; }
             <a class="btn" target="_blank" rel="noopener" href="https://docs.google.com/forms/d/e/1FAIpQLScvjiIQNH8hCzRgOk6-HXiuqrDC39RZ9Ddr6-ozR0WX-wAntQ/viewform?utm_source=hero">Записаться на бесплатный аудит</a>
             <a class="btn secondary" href="#cases">Смотреть кейсы</a>
           </div>
-          
         </div>
         <div class="card hero-benefits reveal">
           <h3>Что получите через <span class="highlight">48 ч</span></h3>
@@ -352,16 +251,15 @@ body.nav-open .nav-panel{ display:block; }
         <div class="card reveal">
           <h3><svg class="icon" width="18" height="18" aria-hidden="true"><use href="#i-cpu"/></svg> AI для <span class="highlight">контента</span></h3>
           <ul class="clean">
-            <li><span class="highlight">AI для Reels</span>  нейроаватар, которого невозможно отличить от живого человека: сам пишет сценарии, снимается в видео и генерирует визуал</li>
-            <li> <span class="highlight-2">AI-ассистент</span> пишет тексты в вашем стиле для соцсетей, блога и рассылок
-</li>
+            <li><span class="highlight">AI для Reels</span>: нейроаватар, которого невозможно отличить от живого человека — сам пишет сценарии, «снимается» и генерирует визуал</li>
+            <li><span class="highlight-2">AI‑ассистент</span> пишет тексты в вашем стиле для соцсетей, блога и рассылок</li>
             <li>AI для <span class="highlight">лид‑магнитов</span>: PDF‑гайды, чек‑листы, материалы</li>
           </ul>
         </div>
         <div class="card reveal">
           <h3><svg class="icon" width="18" height="18" aria-hidden="true"><use href="#i-zap"/></svg> AI для <span class="highlight">продаж</span></h3>
           <ul class="clean">
-            <li> <span class="highlight">AI-продавец в Instagram - Telegram </span>ведёт переписки вместо вас</li>
+            <li><span class="highlight">AI‑продавец в Instagram — Telegram</span> ведёт переписки вместо вас</li>
             <li>AI‑менеджер заявок. Фиксирует лидов в CRM, напоминания об оплате</li>
             <li>AI‑воронка: <span class="highlight-2">прогрев</span> и продажи на автопилоте</li>
             <li>Скрипты и автописьма для повторных продаж</li>
@@ -379,9 +277,9 @@ body.nav-open .nav-panel{ display:block; }
           <h3>AI для <span class="highlight">бизнес‑процессов</span></h3>
           <ul class="clean">
             <li><span class="highlight">Нейроаватар</span> для вебинаров и уроков — записывает уроки вместо вас.</li>
-            <li><span class="highlight">AI-аналитик</span>  показывает, что реально приносит заявки и продажи.</li>
-            <li><span class="highlight">AI-планировщик </span> управляет задачами и проектами команды.</li>
-            <li><span class="highlight">Автосегментация</span> аудитории  для </span>точного таргетинга и персональных офферов.</li>
+            <li><span class="highlight">AI‑аналитик</span> показывает, что реально приносит заявки и продажи.</li>
+            <li><span class="highlight">AI‑планировщик</span> управляет задачами и проектами команды.</li>
+            <li><span class="highlight">Автосегментация</span> аудитории для точного таргетинга и персональных офферов.</li>
           </ul>
         </div>
       </div>
@@ -389,8 +287,7 @@ body.nav-open .nav-panel{ display:block; }
 
     <!-- PROCESS -->
     <section id="process" class="section container">
-      <h2 class="reveal">От хаоса и рутины к свободе и росту: <span class="highlight">3 шага, как мы это сделаем вместе
-</span></h2>
+      <h2 class="reveal">От хаоса и рутины к свободе и росту: <span class="highlight">3 шага, как мы это сделаем вместе</span></h2>
       <div class="card timeline reveal">
         <div class="step">
           <div class="num" aria-hidden="true"></div>
@@ -439,14 +336,14 @@ body.nav-open .nav-panel{ display:block; }
             <li>Создавал AI‑видео для Monobank, Glovo, Novaposhta</li>
           </ul>
           <div class="client-logos" aria-label="Компании, для которых мы делали проекты">
-            <img src="mom.png" alt="Monobank" title="Monobank">
-            <img src="vg.png" alt="Glovo" title="Glovo">
-            <img src="bh.png" alt="Нова пошта" title="Нова пошта">
+            <img src="mom.png" alt="Monobank" title="Monobank" loading="lazy" decoding="async">
+            <img src="vg.png" alt="Glovo" title="Glovo" loading="lazy" decoding="async">
+            <img src="bh.png" alt="Нова пошта" title="Нова пошта" loading="lazy" decoding="async">
           </div>
         </div>
         <div class="card reveal">
           <div class="portrait">
-            <img src="rusi.jpg" alt="Рустам Михайлов" width="720" height="900" loading="lazy" decoding="async">
+            <img src="rusi.jpg" alt="Рустам Михайлов" width="720" height="900" loading="lazy" decoding="async" sizes="(max-width: 480px) 100vw, 420px">
             <span class="label">Рустам · <span class="highlight">AI‑архитектор</span></span>
           </div>
         </div>
@@ -461,9 +358,8 @@ body.nav-open .nav-panel{ display:block; }
           <header>
             <div class="case-meta">
               <span class="badge">Ниша: Сообщество инвесторов</span>
-             
             </div>
-            
+            <h3>Рост заявок и вовлечённости в комьюнити</h3>
           </header>
           <div class="case-body">
             <p class="muted"><b class="highlight">Задача:</b> Усилить бренд, увеличить вовлечённость и автоматизировать продажи.</p>
@@ -485,9 +381,8 @@ body.nav-open .nav-panel{ display:block; }
           <header>
             <div class="case-meta">
               <span class="badge">Ниша: Наставничество · e‑commerce</span>
-              
             </div>
-            
+            <h3>Запуск наставничества по созданию онлайн‑магазинов</h3>
           </header>
           <div class="case-body">
             <p class="muted"><b class="highlight">Задача:</b> Запустить первый онлайн‑продукт, выстроить стратегию и продажи.</p>
@@ -512,7 +407,7 @@ body.nav-open .nav-panel{ display:block; }
               <span class="badge">Наш продукт</span>
               <span class="pill">Онлайн‑школа по ИИ</span>
             </div>
-            
+            <h3>Мы сами используем свою технологию</h3>
           </header>
           <div class="case-body">
             <p class="muted"><b class="highlight">Задача:</b> Запустить онлайн‑школу по искусственному интеллекту с минимальными силами.</p>
@@ -602,6 +497,16 @@ body.nav-open .nav-panel{ display:block; }
       for(const e of entries){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }
     }, { threshold: 0.12 }) : null;
     document.querySelectorAll('.reveal').forEach(el=>{ if(io){ io.observe(el); } else { el.classList.add('in'); } });
+
+    // Бургер‑меню
+    const navBtn = document.querySelector('.nav-toggle');
+    const links = document.getElementById('nav-links');
+    if(navBtn && links){
+      navBtn.addEventListener('click', ()=>{
+        const open = links.classList.toggle('open');
+        navBtn.setAttribute('aria-expanded', String(open));
+      });
+    }
   </script>
 
   <!-- JSON‑LD Organization (микроразметка) -->
